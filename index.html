@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bùi Trung Hiếu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        /* --- Cài đặt chung & Biến CSS --- */
+        :root {
+            --primary-color: #007bff; /* Xanh dương */
+            --secondary-color: #6c757d; /* Xám */
+            --background-color: #f8f9fa; /* Xám rất nhạt */
+            --surface-color: #ffffff; /* Trắng */
+            --text-color: #212529; /* Đen nhạt */
+            --heading-color: #343a40; /* Đen đậm hơn */
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Bù trừ cho header cố định */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* --- Bố cục & Container --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            opacity: 0; /* Mặc định ẩn */
+            transform: translateY(30px); /* Dịch chuyển xuống một chút */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:nth-of-type(even) {
+            background-color: var(--surface-color);
+        }
+        
+        /* --- Header & Thanh điều hướng --- */
+        .main-header {
+            background-color: var(--surface-color);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: top var(--transition-speed) ease-in-out;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .main-nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        .main-nav a {
+            color: var(--heading-color);
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: 500;
+            position: relative;
+            transition: color var(--transition-speed);
+        }
+        
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            transition: width var(--transition-speed) ease-in-out;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: var(--primary-color);
+        }
+        
+        .main-nav a:hover::after,
+        .main-nav a.active::after {
+            width: 80%;
+        }
+
+        /* --- Phần Giới thiệu --- */
+        #introduction {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            margin-top: -80px; /* Bù cho header */
+        }
+
+        .intro-content {
+            max-width: 800px;
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--surface-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        h1.intro-name {
+            font-size: 3.5rem;
+            color: var(--heading-color);
+            margin: 0;
+        }
+
+        p.intro-tagline {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin: 10px 0 25px 0;
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.5rem;
+            background-color: var(--secondary-color);
+            animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* --- Phần Kỹ năng --- */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--heading-color);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .skill-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .skill-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--heading-color);
+        }
+
+        /* --- Phần Liên hệ --- */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-content p {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .social-links a {
+            color: var(--heading-color);
+            font-size: 2rem;
+            margin: 0 20px;
+            transition: color var(--transition-speed), transform var(--transition-speed);
+            display: inline-block;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            background-color: var(--heading-color);
+            color: var(--background-color);
+            text-align: center;
+            padding: 25px 0;
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            h1.intro-name {
+                font-size: 2.5rem;
+            }
+            p.intro-tagline {
+                font-size: 1.2rem;
+            }
+            .main-nav {
+                display: none; /* Ẩn menu trên mobile, có thể thay bằng menu hamburger */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="mainHeader">
+        <div class="container">
+            <a href="#" class="logo">Hboy</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#introduction" class="nav-link active">Giới thiệu</a></li>
+                    <li><a href="#skills" class="nav-link">Kỹ năng</a></li>
+                    <li><a href="#contact" class="nav-link">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="introduction">
+            <div class="container">
+                <div class="intro-content">
+                    <img src="avata.jpg" alt="Ảnh đại diện" class="profile-pic">
+                    <h1 class="intro-name">Bùi Trung Hiếu</h1>
+                    <p class="intro-tagline"><span id="typing-effect"></span><span class="typing-cursor"></span></p>
+                    <p>Tôi là một lập trình viên với niềm đam mê xây dựng các ứng dụng web sáng tạo và hữu ích. Tôi luôn tìm tòi, học hỏi những công nghệ mới để nâng cao kỹ năng và mang lại những sản phẩm tốt nhất.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <h2 class="section-title">Kỹ năng của tôi</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <i class="fa-solid fa-code"></i>
+                        <h3>Phát triển Front-end</h3>
+                        <p>Thành thạo HTML, CSS, JavaScript và các framework hiện đại như React, Vue.js để xây dựng giao diện người dùng trực quan và linh hoạt.</p>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fa-solid fa-server"></i>
+                        <h3>Phát triển Back-end</h3>
+                        <p>Có kinh nghiệm với Node.js, Express và làm việc với các cơ sở dữ liệu như MongoDB, PostgreSQL để xây dựng logic và API mạnh mẽ.</p>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fa-solid fa-palette"></i>
+                        <h3>Thiết kế UI/UX</h3>
+                        <p>Chú trọng vào trải nghiệm người dùng, có khả năng thiết kế giao diện sạch sẽ, dễ sử dụng và thân thiện với người dùng cuối.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                 <h2 class="section-title">Liên hệ với tôi</h2>
+                 <div class="contact-content">
+                    <p>Tôi luôn sẵn sàng cho các cơ hội hợp tác mới hoặc chỉ đơn giản là một cuộc trò chuyện thú vị. Đừng ngần ngại liên hệ với tôi qua các kênh dưới đây!</p>
+                    <div class="social-links">
+                        <a href="mailto:email@example.com" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    </div>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Bùi Trung Hiếu. Ước mơ còn dang dở 😵‍💫.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Hiệu ứng nhập chữ ---
+            const typingText = "Có thể là Lập trình viên Full-Stack";
+            const typingElement = document.getElementById('typing-effect');
+            let i = 0;
+            function typeWriter() {
+                if (i < typingText.length) {
+                    typingElement.innerHTML += typingText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            typeWriter();
+
+            // --- Ẩn/hiện header khi cuộn ---
+            let lastScrollTop = 0;
+            const header = document.getElementById('mainHeader');
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop && scrollTop > 80) {
+                    header.style.top = '-100px'; // Ẩn header
+                } else {
+                    header.style.top = '0'; // Hiện header
+                }
+                lastScrollTop = scrollTop;
+            });
+
+            // --- Đánh dấu link nav đang active ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 90) { // 90 = 80 padding + 10 margin
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // --- Hiệu ứng section hiện ra khi cuộn tới ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // Hiện ra khi 10% section được nhìn thấy
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
+
